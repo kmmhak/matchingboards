@@ -43,3 +43,12 @@ on distance.
 | SessionMessage | /sessions/{id}/messages      | POST   | Add a new message to session    |
 | SessionMessage | /sessions/{id}/messages/{id} | GET    | Get a message from a session    |
 | SessionMessage | /sessions/{id}/messages/{id} | DELETE | Delete a message from a session |
+
+### Game
+
+| Resource | Endpoint    | Method | Description                |
+|----------|-------------|--------|----------------------------|
+| Game     | /games      | GET    | Get all games.             |
+| Game     | /games      | POST   | Add a new game to database |
+| Game     | /games/{id} | GET    | Get a game                 |
+| Game     | /games/{id} | PUT    | Edit a game                |
