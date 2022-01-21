@@ -27,6 +27,8 @@ on distance.
 | UserMessage | /users/{id}/messages/{id} | GET    | Get a users message        |
 | UserMessage | /users/{id}/messages/{id} | DELETE | Delete a users message     |
 
+### Session
+
 | Resource       | Endpoint                     | Method | Description                     |
 |----------------|------------------------------|--------|---------------------------------|
 | Session        | /sessions                    | GET    | Get all sessions                |
