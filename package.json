@@ -1,0 +1,19 @@
+{
+  "name": "matchingboards",
+  "version": "1.0.0",
+  "description": "Board game company finder application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/Banzneri/matchingboards.git"
+  },
+  "author": "TeamBlue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Banzneri/matchingboards/issues"
+  },
+  "homepage": "https://gitlab.com/Banzneri/matchingboards#readme"
+}
