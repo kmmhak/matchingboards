@@ -7,7 +7,7 @@ CREATE TABLE users(
 	username VARCHAR UNIQUE NOT NULL,
 	salt VARCHAR NOT NULL,
 	hash VARCHAR NOT NULL,
-	role roleEnum,
+	role roleEnum DEFAULT 'regular',
 	latitude DECIMAL NOT NULL,
 	longitude DECIMAL NOT NULL,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT Now()
@@ -139,7 +139,7 @@ create table friends(
 	sender_id INT NOT NULL,
 	receiver_id INT NOT NULL,
 	PRIMARY KEY (sender_id, receiver_id),
-	status statusEnum,
+	status statusEnum DEFAULT '1',
 	invite_sent_at TIMESTAMPTZ NOT NULL DEFAULT Now(),
 	CONSTRAINT receiver_id
 		FOREIGN KEY(receiver_id)
