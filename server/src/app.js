@@ -7,6 +7,6 @@ const port = process.env.PORT || 3001;
 server.use(express.json());
 server.use('/users', userRouter);
 
-server.listen(port,()=>{
-    console.log('Server listening on port ' + port + '...')
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}...`);
 });

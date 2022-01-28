@@ -8,6 +8,6 @@ export const getUser = async (req, res) => {
 
 export const addUser = async (req, res) => {
   const user = req.body;
-  await UserService.addUser(user);
-  return res.status(200).json(user);
+  const returnUser = await UserService.addUser(user);
+  return res.status(200).json(returnUser);
 };
