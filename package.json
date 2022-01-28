@@ -15,5 +15,25 @@
   "bugs": {
     "url": "https://gitlab.com/Banzneri/matchingboards/issues"
   },
-  "homepage": "https://gitlab.com/Banzneri/matchingboards#readme"
+  "homepage": "https://gitlab.com/Banzneri/matchingboards#readme",
+  "dependencies": {
+    "packet-reader": "^1.0.0",
+    "dotenv": "^14.3.2",
+    "buffer-writer": "^2.0.0",
+    "pg": "^8.7.1",
+    "pg-connection-string": "^2.5.0",
+    "pg-protocol": "^1.5.0",
+    "postgres-array": "^2.0.0",
+    "pg-int8": "^1.0.1",
+    "pgpass": "^1.0.5",
+    "pg-pool": "^3.4.1",
+    "pg-types": "^2.2.0",
+    "postgres-interval": "^1.2.0",
+    "postgres-bytea": "^1.0.0",
+    "split2": "^4.1.0",
+    "xtend": "^4.0.2",
+    "postgres-date": "^1.0.7"
+  },
+  "devDependencies": {},
+  "keywords": []
 }
