@@ -1,6 +1,15 @@
 import User from '../models/user.model.js';
 
-export const getUser = async (id) => {
+export const getAll = async () => {
+  try {
+    const users = await User.findAll();
+    return users;
+  } catch (error) {
+    throw Error(`Error getting all users: ${error.message}`);
+  }
+};
+
+export const getById = async (id) => {
   try {
     const user = await User.findByPk(id);
     return user;
@@ -9,7 +18,7 @@ export const getUser = async (id) => {
   }
 };
 
-export const addUser = async (user) => {
+export const add = async (user) => {
   try {
     const newUser = await User.create({ ...user });
     return newUser;
