@@ -1,13 +1,16 @@
-import * as UserService from '../services/user.service.js';
+import { handleResponse } from '../lib/utils.js';
+import * as User from '../services/user.service.js';
+
+export const getAllUsers = async (req, res) => {
+  await handleResponse(res, User.getAll, []);
+};
 
 export const getUser = async (req, res) => {
   const id = Number(req.params.id);
-  const result = await UserService.getUser(id);
-  return res.status(200).json(result);
+  await handleResponse(res, User.getById, [id]);
 };
 
 export const addUser = async (req, res) => {
   const user = req.body;
-  const returnUser = await UserService.addUser(user);
-  return res.status(200).json(returnUser);
+  await handleResponse(res, User.add, [user]);
 };
