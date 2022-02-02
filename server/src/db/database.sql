@@ -49,12 +49,10 @@ create table "users_games"(
   "user_id" INT NOT NULL,
   "game_id" INT NOT NULL,
   PRIMARY KEY ("user_id", "game_id"),
-  CONSTRAINT "user_id"
   FOREIGN KEY("user_id")
     REFERENCES "users"("id")
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT "game_id"
   FOREIGN KEY("game_id")
     REFERENCES "games"("id")
     ON DELETE CASCADE

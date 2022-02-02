@@ -14,10 +14,6 @@ on distance.
 | User        | /users                    | POST   | Add a new user             |
 | User        | /users/{id}               | GET    | Get user                   |
 | User        | /users/{id}               | DELETE | Delete user                |
-| UserGame    | /users/{id}/games         | GET    | Get all user games         |
-| UserGame    | /users/{id}/games         | POST   | Add a new game for user    |
-| UserGame    | /users/{id}/games/{id}    | GET    | Get a users game           |
-| UserGame    | /users/{id}/games/{id}    | DELETE | Delete a users game        |
 | UserSession | /users/{id}/sessions      | GET    | Get all users sessions     |
 | UserSession | /users/{id}/sessions      | POST   | Add a new session for user |
 | UserSession | /users/{id}/sessions/{id} | POST   | Get a users session        |
@@ -53,3 +49,6 @@ on distance.
 | Game     | /games/{id}        | GET    | Get a game                 |
 | Game     | /games/{id}        | PUT    | Edit a game                |
 | Game     | /games/search?name | GET    | Search for a game by name  |
+| Game     | /games/users       | POST   | Add a game for a user      |
+| Game     | /games/users       | GET    | Get users games            |
+| Game     | /games/users/{id}  | DELETE | Delete a game from user    |
