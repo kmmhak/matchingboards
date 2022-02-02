@@ -9,7 +9,7 @@ on distance.
 ### User
 
 | Resource    | Endpoint                  | Method | Description                |
-|-------------|---------------------------|--------|----------------------------|
+| ----------- | ------------------------- | ------ | -------------------------- |
 | User        | /users                    | GET    | Get all users              |
 | User        | /users                    | POST   | Add a new user             |
 | User        | /users/{id}               | GET    | Get user                   |
@@ -30,7 +30,7 @@ on distance.
 ### Session
 
 | Resource       | Endpoint                     | Method | Description                     |
-|----------------|------------------------------|--------|---------------------------------|
+| -------------- | ---------------------------- | ------ | ------------------------------- |
 | Session        | /sessions                    | GET    | Get all sessions                |
 | Session        | /sessions                    | POST   | Add a new session               |
 | Session        | /sessions/{id}               | GET    | Get a session                   |
@@ -46,9 +46,10 @@ on distance.
 
 ### Game
 
-| Resource | Endpoint    | Method | Description                |
-|----------|-------------|--------|----------------------------|
-| Game     | /games      | GET    | Get all games.             |
-| Game     | /games      | POST   | Add a new game to database |
-| Game     | /games/{id} | GET    | Get a game                 |
-| Game     | /games/{id} | PUT    | Edit a game                |
+| Resource | Endpoint           | Method | Description                |
+| -------- | ------------------ | ------ | -------------------------- |
+| Game     | /games             | GET    | Get all games.             |
+| Game     | /games             | POST   | Add a new game to database |
+| Game     | /games/{id}        | GET    | Get a game                 |
+| Game     | /games/{id}        | PUT    | Edit a game                |
+| Game     | /games/search?name | GET    | Search for a game by name  |

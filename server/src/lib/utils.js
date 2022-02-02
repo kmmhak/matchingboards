@@ -19,8 +19,8 @@ export const xmlToJson = async (xml) => {
   }
 };
 
-export const jsonToGame = (json) => {
-  const result = json.items.item[0];
+export const jsonToGame = (result) => {
+  const { id } = result.$;
   const name = result.name[0].$.value;
   const releaseYear = result.yearpublished[0].$.value;
   const description = result.description[0];
@@ -29,6 +29,7 @@ export const jsonToGame = (json) => {
   const imageUrl = result.image[0];
 
   return {
+    id,
     name,
     releaseYear,
     description,
@@ -36,6 +37,14 @@ export const jsonToGame = (json) => {
     maxPlayers,
     imageUrl,
   };
+};
+
+export const jsonToGameLite = (result) => {
+  const { id } = result.$;
+  const name = result.name[0].$.value;
+  const releaseYear = result.yearpublished?.[0].$.value;
+
+  return { id, name, releaseYear };
 };
 
 export const getDistanceBetweenUsers = (user1, user2) => {
@@ -60,4 +69,28 @@ export const getDistanceBetweenUsers = (user1, user2) => {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const d = R * c;
   return d;
+};
+
+export const sortGamesSearch = (games, query) => {
+  games.sort((a, b) =>
+    a.name.toLowerCase().indexOf(query) > b.name.toLowerCase().indexOf(query)
+      ? 1
+      : -1,
+  );
+  const exactMatches = games.filter((e) => e.name.toLowerCase() === query);
+
+  return exactMatches.concat(
+    games.filter((game) => game.name.toLowerCase() !== query),
+  );
+};
+
+export const filterOutExpansions = (gamesResult, expansionsResult) => {
+  const games = gamesResult.map((game) => jsonToGameLite(game));
+  const expansions = expansionsResult.map((expansion) =>
+    jsonToGameLite(expansion),
+  );
+
+  return games.filter(
+    (game) => !expansions.find((expansion) => expansion.id === game.id),
+  );
 };
