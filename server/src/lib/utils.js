@@ -1,4 +1,6 @@
 import xml2js from 'xml2js';
+import {randomBytes} from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export const handleResponse = async (res, serviceFunction, params) => {
   try {
@@ -93,4 +95,15 @@ export const filterOutExpansions = (gamesResult, expansionsResult) => {
   return games.filter(
     (game) => !expansions.find((expansion) => expansion.id === game.id),
   );
+}
+
+export const secret = randomBytes(20).toString('hex');
+
+export const genJwt = (user) => {
+  return jwt.sign({
+      user:user.username,
+      sub:user.id,
+      iat:new Date().getTime(),
+      exp:new Date().setDate(new Date().getDate() + 1)
+  },secret);
 };
