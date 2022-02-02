@@ -7,6 +7,7 @@ import {
   xmlToJson,
 } from '../lib/utils.js';
 import Game from '../models/game.model.js';
+import UserGame from '../models/user.game.model.js';
 
 export const getAll = async () => {
   try {
@@ -63,5 +64,14 @@ export const search = async (query, limit = 15) => {
     return sortGamesSearch(filtered, query).slice(0, limit);
   } catch (error) {
     throw Error(`Error searching game: ${error.message}`);
+  }
+};
+
+export const addGameToUser = async (userGame) => {
+  try {
+    const result = await UserGame.create(userGame);
+    return result;
+  } catch (error) {
+    throw Error(`Error adding game to user: ${error.message}`);
   }
 };

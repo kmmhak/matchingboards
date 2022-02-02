@@ -14,3 +14,8 @@ export const searchGames = async (req, res) => {
   const { query, limit } = req.query;
   await handleResponse(res, Game.search, [query, limit]);
 };
+
+export const addGameToUser = async (req, res) => {
+  const userGame = req.body;
+  await handleResponse(res, Game.addGameToUser, [userGame]);
+};
