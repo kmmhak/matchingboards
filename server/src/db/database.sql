@@ -15,7 +15,7 @@ CREATE TABLE "users"(
 );
 
 create table "games" (
-  "id" SERIAL PRIMARY KEY,
+  "id" INT PRIMARY KEY,
   "name" VARCHAR NOT NULL,
   "release_year" INT NOT NULL,
   "description" VARCHAR NOT NULL,
