@@ -75,3 +75,14 @@ export const addGameToUser = async (userGame) => {
     throw Error(`Error adding game to user: ${error.message}`);
   }
 };
+
+export const deleteGameFromUser = async (userId, gameId) => {
+  try {
+    const result = await UserGame.destroy({
+      where: { user_id: userId, game_id: gameId },
+    });
+    return result;
+  } catch (error) {
+    throw Error(`Error deleting a game from user: ${error.message}`);
+  }
+};

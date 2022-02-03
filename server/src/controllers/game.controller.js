@@ -19,3 +19,8 @@ export const addGameToUser = async (req, res) => {
   const userGame = req.body;
   await handleResponse(res, Game.addGameToUser, [userGame]);
 };
+
+export const deleteGameFromUser = async (req, res) => {
+  const { userId, gameId } = req.body;
+  await handleResponse(res, Game.deleteGameFromUser, [userId, gameId]);
+};
