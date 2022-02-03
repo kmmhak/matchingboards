@@ -3,7 +3,7 @@ import { API_EXPANSION, API_ID, API_SEARCH } from '../../constants.js';
 import {
   filterOutExpansions,
   jsonToGame,
-  sortGamesSearch,
+  sortGames,
   xmlToJson,
 } from '../lib/utils.js';
 import Game from '../models/game.model.js';
@@ -61,7 +61,7 @@ export const search = async (query, limit = 15) => {
 
     const filtered = filterOutExpansions(games, expansions);
 
-    return sortGamesSearch(filtered, query).slice(0, limit);
+    return sortGames(filtered, query).slice(0, limit);
   } catch (error) {
     throw Error(`Error searching game: ${error.message}`);
   }

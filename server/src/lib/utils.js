@@ -1,6 +1,8 @@
 import xml2js from 'xml2js';
 import { randomBytes } from 'crypto';
 import jwt from 'jsonwebtoken';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 export const handleResponse = async (res, serviceFunction, params) => {
   try {
@@ -10,6 +12,8 @@ export const handleResponse = async (res, serviceFunction, params) => {
     return res.status(404).json({ message: error.message });
   }
 };
+
+export const dirName = (fileUrl) => dirname(fileURLToPath(fileUrl));
 
 export const xmlToJson = async (xml) => {
   const parser = new xml2js.Parser();
@@ -73,7 +77,7 @@ export const getDistanceBetweenUsers = (user1, user2) => {
   return d;
 };
 
-export const sortGamesSearch = (games, query) => {
+export const sortGames = (games, query) => {
   games.sort((a, b) =>
     a.name.toLowerCase().indexOf(query) > b.name.toLowerCase().indexOf(query)
       ? 1

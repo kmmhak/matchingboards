@@ -1,10 +1,7 @@
 import { Sequelize } from 'sequelize';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import { config } from 'dotenv';
 
-const dir = dirname(fileURLToPath(import.meta.url));
-config({ path: path.resolve(dir, '../../.env') });
+config();
 
 const sequelize = new Sequelize({
   database: process.env.DB_NAME,

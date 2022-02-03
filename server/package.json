@@ -6,7 +6,8 @@
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db": "node ./src/db/drop-database.js && node ./src/db/create-database.js"
   },
   "author": "TeamBlue",
   "license": "ISC",
@@ -20,13 +21,14 @@
   "dependencies": {
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "node-fetch": "^3.2.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.14.1",
-    "xml2js": "^0.4.23",
+    "pgtools": "^0.3.2",
     "randombytes": "^2.1.0",
-    "passport-jwt": "^4.0.0",
-    "jsonwebtoken": "^8.5.1"
+    "sequelize": "^6.14.1",
+    "xml2js": "^0.4.23"
   }
 }
