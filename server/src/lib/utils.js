@@ -3,8 +3,13 @@ import { randomBytes } from 'crypto';
 import jwt from 'jsonwebtoken';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { validationResult } from 'express-validator';
 
-export const handleResponse = async (res, serviceFunction, params) => {
+export const handleResponse = async (req, res, serviceFunction, params) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors);
+  }
   try {
     const result = await serviceFunction(...params);
     return res.status(200).json(result);

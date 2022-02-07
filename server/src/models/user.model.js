@@ -55,7 +55,7 @@ const User = sequelize.define(
     updatedAt: {
       type: DataTypes.DATE,
       field: 'updated_at',
-      defaultValue: DataTypes.NOW,
+      defaultValue: null,
     },
   },
   {
