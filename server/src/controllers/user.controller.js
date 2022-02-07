@@ -14,3 +14,8 @@ export const addUser = async (req, res) => {
   const user = req.body;
   await handleResponse(res, User.add, [user]);
 };
+
+export const deleteUser = async (req, res) => {
+  const id = Number(req.params.id);
+  await handleResponse(res, User.deleteById, [id]);
+};

@@ -26,3 +26,16 @@ export const add = async (user) => {
     throw Error(`Error adding user: ${error.message}`);
   }
 };
+
+export const deleteById = async (user) => {
+  try {
+    await User.destroy({
+      where: {
+        id: user.id,
+      },
+    });
+    return "User deleted";
+  } catch (error) {
+    throw Error(`Error deleting user by id ${user.id}: ${error.message}`);
+  }
+};

@@ -14,6 +14,11 @@ on distance.
 | User        | /users                    | POST   | Add a new user             |
 | User        | /users/{id}               | GET    | Get user                   |
 | User        | /users/{id}               | DELETE | Delete user                |
+| User        | /users                    | PUT    | Update user info           |
+| UserGame    | /users/{id}/games         | GET    | Get all user games         |
+| UserGame    | /users/{id}/games         | POST   | Add a new game for user    |
+| UserGame    | /users/{id}/games/{id}    | GET    | Get a users game           |
+| UserGame    | /users/{id}/games/{id}    | DELETE | Delete a users game        |
 | UserSession | /users/{id}/sessions      | GET    | Get all users sessions     |
 | UserSession | /users/{id}/sessions      | POST   | Add a new session for user |
 | UserSession | /users/{id}/sessions/{id} | POST   | Get a users session        |

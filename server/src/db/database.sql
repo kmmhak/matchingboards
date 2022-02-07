@@ -3,15 +3,16 @@ create type "roleEnum" AS enum ('regular', 'admin', 'eventOrganizer');
 CREATE TABLE "users"(
   "id" SERIAL PRIMARY KEY,
   "email" VARCHAR UNIQUE NOT NULL,
-  "description" VARCHAR,
   "username" VARCHAR UNIQUE NOT NULL,
+  "description" VARCHAR,
   "salt" VARCHAR NOT NULL,
   "hash" VARCHAR NOT NULL,
   "role" "roleEnum" DEFAULT 'regular',
+  "zip_code" INT NOT NULL,
   "latitude" DECIMAL NOT NULL,
   "longitude" DECIMAL NOT NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT Now(),
-  "updated_at" TIMESTAMPTZ DEFAULT NULL
+  "updated_at" TIMESTAMPTZ DEFAULT DEFAULT Now()
 );
 
 create table "games" (

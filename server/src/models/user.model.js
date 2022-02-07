@@ -12,11 +12,13 @@ const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     userName: {
       type: DataTypes.STRING,
       field: 'username',
       allowNull: false,
+      unique: true,
     },
     description: {
       type: DataTypes.STRING,
@@ -32,6 +34,10 @@ const User = sequelize.define(
     role: {
       type: DataTypes.ENUM('regular', 'admin', 'eventOrganizer'),
       defaultValue: 'regular',
+    },
+    zipCode: {
+      type: DataTypes.INTEGER,
+      field: 'zip_code',
     },
     latitude: {
       type: DataTypes.DECIMAL,
