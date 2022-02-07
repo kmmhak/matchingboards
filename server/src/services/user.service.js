@@ -34,7 +34,7 @@ export const deleteById = async (user) => {
         id: user.id,
       },
     });
-    return "User deleted";
+    return 'User deleted';
   } catch (error) {
     throw Error(`Error deleting user by id ${user.id}: ${error.message}`);
   }
