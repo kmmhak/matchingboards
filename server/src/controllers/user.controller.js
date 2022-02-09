@@ -42,10 +42,11 @@ export const validate = (method) => {
   const validEmail = () =>
     body('email', 'email must be of valid form').isEmail();
 
-  const notNullUsername = () =>
-    body('userName', 'username must be minimum 4 characters long').isLength({
-      min: 4,
-    });
+  const validUsername = () => body('userName', 'username must be minimum 4 characters long')
+    .isLength({ min: 4, max: 20 });
+
+  const validDescription = () =>
+    body('description', 'invalid description').isString();
 
   const validZipCode = () =>
     body('zipCode', 'zipcode must be 5 numbers long').isLength({
@@ -66,6 +67,10 @@ export const validate = (method) => {
       max: 180,
     });
 
+  const validDistance = () =>
+    body('distance', 'distance must be an integer')
+      .isInt();
+
   switch (method) {
     case 'getUser':
       return [validId()];
@@ -74,10 +79,12 @@ export const validate = (method) => {
     case 'addUser':
       return [
         validEmail(),
-        notNullUsername(),
+        validUsername(),
+        validDescription(),
         validZipCode(),
         validLatitude(),
         validLongitude(),
+        validDistance(),
       ];
     default:
       return [];

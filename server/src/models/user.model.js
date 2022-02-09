@@ -45,6 +45,10 @@ const User = sequelize.define(
     longitude: {
       type: DataTypes.DECIMAL,
     },
+    distance: {
+      type: DataTypes.INTEGER,
+      defaultValue: 10,
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',
