@@ -41,11 +41,9 @@ const User = sequelize.define(
     },
     latitude: {
       type: DataTypes.DECIMAL,
-      allowNull: false,
     },
     longitude: {
       type: DataTypes.DECIMAL,
-      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,

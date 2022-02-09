@@ -9,10 +9,10 @@ CREATE TABLE "users"(
   "hash" VARCHAR NOT NULL,
   "role" "roleEnum" DEFAULT 'regular',
   "zip_code" INT NOT NULL,
-  "latitude" DECIMAL NOT NULL,
-  "longitude" DECIMAL NOT NULL,
+  "latitude" DECIMAL,
+  "longitude" DECIMAL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT Now(),
-  "updated_at" TIMESTAMPTZ DEFAULT DEFAULT Now()
+  "updated_at" TIMESTAMPTZ DEFAULT Now()
 );
 
 create table "games" (
