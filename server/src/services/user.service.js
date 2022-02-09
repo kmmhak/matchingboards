@@ -72,6 +72,21 @@ export const genHashBytes = (password, salt) => {
   }
 };
 
+export const verifyPassword = (password, combined, callback) => {
+  const saltBytes = combined.readUInt32BE(0);
+  const hashBytes = combined.length - saltBytes - 8;
+  const iterations = combined.readUInt32BE(4);
+  const salt = combined.slice(8, saltBytes + 8);
+  const hash = combined.toString('binary', saltBytes + 8);
+
+  crypto.pbkdf2(password, salt, iterations, hashBytes, (err, verify) => {
+    if (err) {
+      return callback(err, false);
+    }
+    return callback(null, verify.toString('binary') === hash);
+  });
+};
+
 export const deleteById = async (user) => {
   try {
     await User.destroy({
