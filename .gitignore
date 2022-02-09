@@ -1,4 +1,4 @@
 node_modules
-requests.rest
+requests*.rest
 .env
 .history

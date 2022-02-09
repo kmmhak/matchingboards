@@ -1,9 +1,12 @@
 import xml2js from 'xml2js';
-import { randomBytes } from 'crypto';
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { validationResult } from 'express-validator';
+import { config } from 'dotenv';
+
+config();
 
 export const handleResponse = async (req, res, serviceFunction, params) => {
   const errors = validationResult(req);
@@ -12,7 +15,9 @@ export const handleResponse = async (req, res, serviceFunction, params) => {
   }
   try {
     const result = await serviceFunction(...params);
-    return res.status(200).json(result);
+    return result
+      ? res.status(200).json(result)
+      : res.status(204).json({ message: 'Not found' });
   } catch (error) {
     return res.status(404).json({ message: error.message });
   }
@@ -106,17 +111,33 @@ export const filterOutExpansions = (gamesResult, expansionsResult) => {
   );
 };
 
-export const secret = randomBytes(20).toString('hex');
-
 export const genJwt = (user) => {
   const newJwt = jwt.sign(
     {
-      user: user.username,
       sub: user.id,
       iat: new Date().getTime(),
       exp: new Date().setDate(new Date().getDate() + 1),
     },
-    secret,
+    process.env.SECRET,
   );
-  return newJwt;
+  return { token: `Bearer ${newJwt}` };
+};
+
+export const genSaltHash = (password) => {
+  const salt = crypto.randomBytes(32).toString('hex');
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
+    .toString('hex');
+
+  return {
+    salt,
+    hash,
+  };
+};
+
+export const validPassword = (password, hash, salt) => {
+  const hashVerify = crypto
+    .pbkdf2Sync(password, salt, 10000, 64, 'sha512')
+    .toString('hex');
+  return hash === hashVerify;
 };

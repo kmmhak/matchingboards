@@ -1,7 +1,9 @@
+import { config } from 'dotenv';
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { secret } from '../lib/utils.js';
 import User from '../models/user.model.js';
+
+config();
 
 const extractJwt = ExtractJwt;
 
@@ -16,15 +18,14 @@ export const authJwt = async (jwtPayload, done) => {
 export const jwtStrategy = new JwtStrategy(
   {
     jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: secret,
+    secretOrKey: process.env.SECRET,
   },
   (jwtPayload, done) => {
     authJwt(jwtPayload, done);
   },
 );
 
-export const passportJwt = (res) => {
-  passport.authenticate('jwt', { session: false, failureMessage: 'User not found.' }, () => {
-    res.status(200);
+export const passportJwt = () =>
+  passport.authenticate('jwt', {
+    session: false,
   });
-};

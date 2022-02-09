@@ -1,3 +1,4 @@
+import { genJwt, genSaltHash, validPassword } from '../lib/utils.js';
 import User from '../models/user.model.js';
 
 export const getAll = async () => {
@@ -27,8 +28,6 @@ export const getByEmail = async (user) => {
 
 export const add = async (user) => {
   try {
-    const email = await getByEmail(user);
-    if (email) return 'Email already exists.';
     const newUser = await User.create({ ...user });
     return newUser;
   } catch (error) {
@@ -46,5 +45,55 @@ export const deleteById = async (user) => {
     return 'User deleted';
   } catch (error) {
     throw Error(`Error deleting user by id ${user.id}: ${error.message}`);
+  }
+};
+
+export const register = async (userName, email, password, zipCode) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (user) throw Error('User already exists');
+
+    const { salt, hash } = genSaltHash(password);
+
+    const newUser = {
+      email,
+      userName,
+      zipCode,
+      salt,
+      hash,
+    };
+
+    await add(newUser);
+    return newUser;
+  } catch (error) {
+    throw Error(`Error registering user: ${error.message}`);
+  }
+};
+
+export const login = async (email, password) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) throw Error('No user found with given email');
+
+    const { hash, salt } = user;
+
+    if (validPassword(password, hash, salt)) {
+      const { token } = genJwt(user);
+      return { user, token };
+    }
+
+    throw Error('Wrong password');
+  } catch (error) {
+    throw Error(`Error logging in: ${error.message}`);
   }
 };

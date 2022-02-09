@@ -39,9 +39,11 @@ export const getById = async (id) => {
 
     if (!result) return null;
 
-    await addGame(jsonToGame(result));
+    const jsonGame = jsonToGame(result);
 
-    return result;
+    await addGame(jsonGame);
+
+    return jsonGame;
   } catch (error) {
     throw Error(`Error getting game by id: ${error.message}`);
   }
