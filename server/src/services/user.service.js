@@ -1,4 +1,11 @@
+import * as crypto from 'crypto';
 import User from '../models/user.model.js';
+
+const config = {
+  hashBytes: 32,
+  saltBytes: 16,
+  iterations: 872791,
+};
 
 export const getAll = async () => {
   try {
@@ -33,6 +40,35 @@ export const add = async (user) => {
     return newUser;
   } catch (error) {
     throw Error(`Error adding user: ${error.message}`);
+  }
+};
+
+export const genSaltBytes = async () => {
+  try {
+    const saltBytes = crypto.randomBytes(config.saltBytes, (err, bytes) => {
+      if (err) {
+        return err;
+      }
+      return bytes;
+    });
+    return saltBytes;
+  } catch (error) {
+    throw Error(`Error trying to generate saltbytes:${error.message}`);
+  }
+};
+
+export const genHashBytes = (password, salt) => {
+  try {
+    const hashBytes =
+    crypto.pbkdf2(password, salt, config.iterations, config.hashBytes, (err, hash) => {
+      if (err) {
+        return err;
+      }
+      return hash;
+    });
+    return hashBytes;
+  } catch (error) {
+    throw Error(`Error trying to generate hashbytes:${error.message}`);
   }
 };
 
