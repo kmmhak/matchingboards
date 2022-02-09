@@ -108,8 +108,8 @@ export const filterOutExpansions = (gamesResult, expansionsResult) => {
 
 export const secret = randomBytes(20).toString('hex');
 
-export const genJwt = (user) =>
-  jwt.sign(
+export const genJwt = (user) => {
+  const newJwt = jwt.sign(
     {
       user: user.username,
       sub: user.id,
@@ -118,3 +118,5 @@ export const genJwt = (user) =>
     },
     secret,
   );
+  return newJwt;
+};
