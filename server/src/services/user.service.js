@@ -43,7 +43,7 @@ export const add = async (user) => {
   }
 };
 
-export const genSaltBytes = async () => {
+export const genSaltBytes = () => {
   try {
     const saltBytes = crypto.randomBytes(config.saltBytes, (err, bytes) => {
       if (err) {
