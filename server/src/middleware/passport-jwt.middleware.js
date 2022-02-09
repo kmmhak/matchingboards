@@ -1,3 +1,4 @@
+import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { secret } from '../lib/utils.js';
 import User from '../models/user.model.js';
@@ -21,3 +22,9 @@ export const jwtStrategy = new JwtStrategy(
     authJwt(jwtPayload, done);
   },
 );
+
+export const passportJwt = (res) => {
+  passport.authenticate('jwt', { session: false, failureMessage: 'User not found.' }, () => {
+    res.status(200);
+  });
+};

@@ -18,8 +18,17 @@ export const getById = async (id) => {
   }
 };
 
+export const getByEmail = async (user) => {
+  const userToAdd = await User.findOne({
+    where: { email: user.email },
+  });
+  return userToAdd;
+};
+
 export const add = async (user) => {
   try {
+    const email = await getByEmail(user);
+    if (email) return 'Email already exists.';
     const newUser = await User.create({ ...user });
     return newUser;
   } catch (error) {
