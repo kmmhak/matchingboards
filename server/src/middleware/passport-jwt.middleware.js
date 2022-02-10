@@ -7,11 +7,12 @@ config();
 
 const extractJwt = ExtractJwt;
 
-export const authJwt = async (jwtPayload, done) => {
+export const authJwt = async (req, jwtPayload, done) => {
   const user = await User.findByPk(jwtPayload.sub);
   if (!user) {
     return done(null, false);
   }
+  req.user = user;
   return done(null, user);
 };
 
@@ -19,9 +20,10 @@ export const jwtStrategy = new JwtStrategy(
   {
     jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET,
+    passReqToCallback: true,
   },
-  (jwtPayload, done) => {
-    authJwt(jwtPayload, done);
+  (req, jwtPayload, done) => {
+    authJwt(req, jwtPayload, done);
   },
 );
 
