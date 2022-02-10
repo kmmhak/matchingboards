@@ -36,14 +36,29 @@ export const login = async (req, res) => {
   await handleResponse(req, res, User.login, [email, password]);
 };
 
+export const changePassword = async (req, res) => {
+  const { oldPassword, newPassword, confirmNewPassword } = req.body;
+  const { id } = req.user;
+
+  await handleResponse(req, res, User.changePassword, [
+    id,
+    oldPassword,
+    newPassword,
+    confirmNewPassword,
+  ]);
+};
+
 export const validate = (method) => {
   const validId = () => param('id', 'id must be an integer').isInt();
 
   const validEmail = () =>
     body('email', 'email must be of valid form').isEmail();
 
-  const validUsername = () => body('userName', 'username must be minimum 4 characters long')
-    .isLength({ min: 4, max: 20 });
+  const validUsername = () =>
+    body('userName', 'username must be minimum 4 and maximum 20 characters long').isLength({
+      min: 4,
+      max: 20,
+    });
 
   const validDescription = () =>
     body('description', 'invalid description').isString();
@@ -68,8 +83,10 @@ export const validate = (method) => {
     });
 
   const validDistance = () =>
-    body('distance', 'distance must be an integer')
-      .isInt();
+    body('distance', 'distance must be an integer').isInt();
+
+  const validPassword = (passwordName) =>
+    body(passwordName, 'Password must be a string').isString();
 
   switch (method) {
     case 'getUser':
@@ -85,6 +102,12 @@ export const validate = (method) => {
         validLatitude(),
         validLongitude(),
         validDistance(),
+      ];
+    case 'changePassword':
+      return [
+        validPassword('oldPassword'),
+        validPassword('newPassword'),
+        validPassword('confirmNewPassword'),
       ];
     default:
       return [];
