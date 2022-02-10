@@ -97,3 +97,30 @@ export const login = async (email, password) => {
     throw Error(`Error logging in: ${error.message}`);
   }
 };
+
+export const changePassword = async (
+  userId,
+  oldPassword,
+  newPassword,
+  confirmNewPassword,
+) => {
+  try {
+    const user = await getById(userId);
+
+    if (!user) throw Error('No user found');
+
+    if (
+      validPassword(oldPassword, user.hash, user.salt) &&
+      newPassword === confirmNewPassword
+    ) {
+      const { hash, salt } = genSaltHash(newPassword);
+      user.set({ hash, salt });
+      user.save();
+      return 'Password successfully updated';
+    }
+
+    throw Error('Invalid password');
+  } catch (error) {
+    throw Error(`Error changing password: ${error.message}`);
+  }
+};

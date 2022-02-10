@@ -1,7 +1,10 @@
 import passport from 'passport';
 import { Router } from 'express';
 import * as controller from '../controllers/user.controller.js';
-import { jwtStrategy } from '../middleware/passport-jwt.middleware.js';
+import {
+  jwtStrategy,
+  passportJwt,
+} from '../middleware/passport-jwt.middleware.js';
 
 const userRouter = Router({ mergeParams: true });
 passport.use(jwtStrategy);
@@ -13,6 +16,12 @@ userRouter.delete(
   '/:id',
   controller.validate('deleteUser'),
   controller.deleteUser,
+);
+userRouter.put(
+  '/password',
+  passportJwt(),
+  controller.validate('changePassword'),
+  controller.changePassword,
 );
 
 export default userRouter;
