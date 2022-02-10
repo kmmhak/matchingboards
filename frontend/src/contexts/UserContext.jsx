@@ -1,5 +1,4 @@
-import { useState, createContext, useContext } from 'react';
-import * as User from '../services/UserService';
+import { useState, createContext, useContext, useMemo } from 'react';
 
 const userContext = createContext({
   user: null,
@@ -7,6 +6,7 @@ const userContext = createContext({
   login: () => null,
   logout: () => null,
   update: () => null,
+  token: null,
 });
 
 // TODO: Is it enough to throw errors in service and catching
@@ -14,33 +14,39 @@ const userContext = createContext({
 export function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
 
-  const login = async (input) => {
-    const response = await User.login(input);
-    const { token, user } = response.data;
-    localStorage.setItem('token', token);
+  const login = (user, jwt) => {
+    localStorage.setItem('token', jwt);
+    setToken(jwt);
     setLoggedIn(true);
     setCurrentUser(user);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    setToken(null);
     setLoggedIn(false);
     setCurrentUser(null);
   };
 
-  const update = async () => {
-    const response = await User.getById(currentUser.id);
-    setCurrentUser(response.data.user);
+  const update = (user) => {
+    setCurrentUser(user);
   };
 
-  return (
-    <userContext.Provider
-      value={(currentUser, loggedIn, login, logout, update)}
-    >
-      {children}
-    </userContext.Provider>
+  const values = useMemo(
+    () => ({
+      currentUser,
+      loggedIn,
+      login,
+      logout,
+      update,
+      token,
+    }),
+    [currentUser, loggedIn, token],
   );
+
+  return <userContext.Provider value={values}>{children}</userContext.Provider>;
 }
 
 export function useUser() {
