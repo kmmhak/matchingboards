@@ -148,13 +148,13 @@ create table "ratings"(
     ON UPDATE CASCADE	
 );
 
-create type "statusEnum" as enum ('1', '2', '3');
+create type "statusEnum" as enum ('pending', 'accepted', 'rejected');
 
 create table "friends"(
   "sender_id" INT NOT NULL,
   "receiver_id" INT NOT NULL,
   PRIMARY KEY ("sender_id", "receiver_id"),
-  status "statusEnum" DEFAULT '1',
+  status "statusEnum" DEFAULT 'pending',
   "invite_sent_at" TIMESTAMPTZ NOT NULL DEFAULT Now(),
   CONSTRAINT "receiver_id"
     FOREIGN KEY("receiver_id")
