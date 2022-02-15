@@ -141,3 +141,10 @@ export const validPassword = (password, hash, salt) => {
     .toString('hex');
   return hash === hashVerify;
 };
+
+export const isAdmin = (role) => {
+  if (role !== 'admin') {
+    return false;
+  }
+  return true;
+};
