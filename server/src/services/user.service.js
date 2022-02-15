@@ -1,4 +1,4 @@
-import { genJwt, genSaltHash, validPassword } from '../lib/utils.js';
+import { genJwt, genSaltHash, validPassword, isAdmin } from '../lib/utils.js';
 import User from '../models/user.model.js';
 
 export const getAll = async () => {
@@ -35,16 +35,40 @@ export const add = async (user) => {
   }
 };
 
-export const deleteById = async (user) => {
+export const deleteById = async (id, user) => {
   try {
+    if (id !== user.id) {
+      const adminStatus = isAdmin(user.role);
+      if (!adminStatus) {
+        return 'You do not have admin status';
+      }
+    }
+
     await User.destroy({
       where: {
-        id: user.id,
+        id,
       },
     });
     return 'User deleted';
   } catch (error) {
-    throw Error(`Error deleting user by id ${user.id}: ${error.message}`);
+    throw Error(`Error deleting user by id ${id}`);
+  }
+};
+
+export const update = async (user, id) => {
+  try {
+    await User.update(
+      {
+        ...user,
+      }, {
+        where: {
+          id,
+        },
+      });
+
+    return 'Information updated successfully';
+  } catch (error) {
+    throw Error(`Error updating information: ${error.message}`);
   }
 };
 

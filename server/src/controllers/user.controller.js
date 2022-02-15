@@ -18,7 +18,14 @@ export const addUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const id = Number(req.params.id);
-  await handleResponse(req, res, User.deleteById, [id]);
+  const { user } = req;
+  await handleResponse(req, res, User.deleteById, [id, user]);
+};
+
+export const updateUser = async (req, res) => {
+  const user = req.body;
+  const { id } = req.user;
+  await handleResponse(req, res, User.update, [user, id]);
 };
 
 export const register = async (req, res) => {
@@ -69,7 +76,6 @@ export const validate = (method) => {
       max: 5,
     });
 
-  // Latitude and longitude in decimal degrees (DD)
   const validLatitude = () =>
     body('latitude', 'latitude must be of valid form').isFloat({
       min: -90,
@@ -103,6 +109,15 @@ export const validate = (method) => {
         validLongitude(),
         validDistance(),
       ];
+    case 'updateUser':
+      return [
+        validDescription(),
+        validZipCode(),
+        validLatitude(),
+        validLongitude(),
+        validDistance(),
+      ];
+
     case 'changePassword':
       return [
         validPassword('oldPassword'),
