@@ -11,8 +11,8 @@ export const getAll = async () => {
     throw Error('Error getting all users');
   }
 };
-/*
-const add = async (senderId, receiverId) => {
+
+export const add = async (senderId, receiverId) => {
   const friend = {
     senderId,
     receiverId,
@@ -20,6 +20,3 @@ const add = async (senderId, receiverId) => {
   const newFriend = Friend.create({ ...friend });
   return newFriend;
 };
-
-export default add;
-*/
