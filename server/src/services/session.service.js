@@ -1,11 +1,11 @@
-import { getDistanceBetweenUsers } from '../lib/utils.js';
+import { getDistanceBetweenUsers, result } from '../lib/utils.js';
 import Session from '../models/session.model.js';
 import User from '../models/user.model.js';
 
 export const getAll = async () => {
   try {
     const sessions = await Session.findAll();
-    return sessions;
+    return result(sessions, 200);
   } catch (error) {
     throw Error(`Error getting all sessions: ${error.message}`);
   }
@@ -14,7 +14,7 @@ export const getAll = async () => {
 export const getById = async (id) => {
   try {
     const session = await Session.findByPk(id);
-    return session;
+    return result(session, 200);
   } catch (error) {
     throw Error(`Error getting a session: ${error.message}`);
   }
@@ -23,7 +23,7 @@ export const getById = async (id) => {
 export const add = async (session) => {
   try {
     const newSession = await Session.create({ ...session });
-    return newSession;
+    return result(newSession, 200);
   } catch (error) {
     throw Error(`Error adding a session: ${error.message}`);
   }
@@ -36,7 +36,7 @@ export const deleteByID = async (id) => {
         id,
       },
     });
-    return 'Session deleted';
+    return result('Session deleted', 200);
   } catch (error) {
     throw Error(`Error deleting a session: ${error.message}`);
   }
@@ -64,7 +64,7 @@ export const getNearbySessionsByGameId = async (gameId, user) => {
       return getDistanceBetweenUsers(user, sessionCreator) < 50;
     });
 
-    return nearbySessions;
+    return result(nearbySessions, 200);
   } catch (error) {
     throw Error(`Error getting sessions by distance: ${error.message}`);
   }

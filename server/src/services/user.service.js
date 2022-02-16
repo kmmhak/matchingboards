@@ -1,10 +1,16 @@
-import { genJwt, genSaltHash, validPassword, isAdmin } from '../lib/utils.js';
+import {
+  genJwt,
+  genSaltHash,
+  result,
+  validPassword,
+  isAdmin,
+} from '../lib/utils.js';
 import User from '../models/user.model.js';
 
 export const getAll = async () => {
   try {
     const users = await User.findAll();
-    return users;
+    return result(users, 200);
   } catch (error) {
     throw Error(`Error getting all users: ${error.message}`);
   }
@@ -13,7 +19,7 @@ export const getAll = async () => {
 export const getById = async (id) => {
   try {
     const user = await User.findByPk(id);
-    return user;
+    return result(user, 200);
   } catch (error) {
     throw Error(`Error getting user by id: ${error.message}`);
   }
@@ -23,13 +29,13 @@ export const getByEmail = async (user) => {
   const userToAdd = await User.findOne({
     where: { email: user.email },
   });
-  return userToAdd;
+  return result(userToAdd, 200);
 };
 
 export const add = async (user) => {
   try {
     const newUser = await User.create({ ...user });
-    return newUser;
+    return result(newUser, 200);
   } catch (error) {
     throw Error(`Error adding user: ${error.message}`);
   }
@@ -40,7 +46,7 @@ export const deleteById = async (id, user) => {
     if (id !== user.id) {
       const adminStatus = isAdmin(user.role);
       if (!adminStatus) {
-        return 'You do not have admin status';
+        return result('You are unauthorized', 401);
       }
     }
 
@@ -49,7 +55,7 @@ export const deleteById = async (id, user) => {
         id,
       },
     });
-    return 'User deleted';
+    return result('User deleted', 200);
   } catch (error) {
     throw Error(`Error deleting user by id ${id}`);
   }
@@ -60,13 +66,15 @@ export const update = async (user, id) => {
     await User.update(
       {
         ...user,
-      }, {
+      },
+      {
         where: {
           id,
         },
-      });
+      },
+    );
 
-    return 'Information updated successfully';
+    return result('User info updated successfully', 200);
   } catch (error) {
     throw Error(`Error updating information: ${error.message}`);
   }
@@ -80,7 +88,7 @@ export const register = async (userName, email, password, zipCode) => {
       },
     });
 
-    if (user) throw Error('User already exists');
+    if (user) return result('Email already in use', 409);
 
     const { salt, hash } = genSaltHash(password);
 
@@ -93,13 +101,15 @@ export const register = async (userName, email, password, zipCode) => {
     };
 
     await add(newUser);
-    return newUser;
+    return result(newUser, 200);
   } catch (error) {
     throw Error(`Error registering user: ${error.message}`);
   }
 };
 
 export const login = async (email, password) => {
+  const errorMessage = 'Wrong username or password';
+
   try {
     const user = await User.findOne({
       where: {
@@ -107,16 +117,16 @@ export const login = async (email, password) => {
       },
     });
 
-    if (!user) throw Error('No user found with given email');
+    if (!user) return result(errorMessage, 404);
 
     const { hash, salt } = user;
 
     if (validPassword(password, hash, salt)) {
       const { token } = genJwt(user);
-      return { user, token };
+      return result({ user, token }, 200);
     }
 
-    throw Error('Wrong password');
+    return result(errorMessage, 400);
   } catch (error) {
     throw Error(`Error logging in: ${error.message}`);
   }
@@ -131,7 +141,7 @@ export const changePassword = async (
   try {
     const user = await getById(userId);
 
-    if (!user) throw Error('No user found');
+    if (!user) return result('User not found', 404);
 
     if (
       validPassword(oldPassword, user.hash, user.salt) &&
@@ -140,10 +150,10 @@ export const changePassword = async (
       const { hash, salt } = genSaltHash(newPassword);
       user.set({ hash, salt });
       user.save();
-      return 'Password successfully updated';
+      return result('Password successfully updated', 200);
     }
 
-    throw Error('Invalid password');
+    return result('Invalid password', 400);
   } catch (error) {
     throw Error(`Error changing password: ${error.message}`);
   }
