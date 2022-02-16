@@ -15,9 +15,7 @@ export const handleResponse = async (req, res, serviceFunction, params) => {
   }
   try {
     const result = await serviceFunction(...params);
-    return result
-      ? res.status(200).json(result)
-      : res.status(204).json({ message: 'Not found' });
+    return res.status(result.code).json(result.response);
   } catch (error) {
     return res.status(404).json({ message: error.message });
   }
@@ -148,3 +146,5 @@ export const isAdmin = (role) => {
   }
   return true;
 };
+
+export const result = (response, code) => ({ response, code });
