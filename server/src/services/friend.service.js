@@ -18,7 +18,7 @@ export const add = async (senderId, receiverId) => {
       senderId,
       receiverId,
     };
-    const newFriend = Friend.create({ ...friend });
+    const newFriend = await Friend.create({ ...friend });
     return newFriend;
   } catch (error) {
     throw Error(`Error trying to add user ${error.message}`);
