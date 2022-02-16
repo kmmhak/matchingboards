@@ -5,6 +5,7 @@ import gameRouter from './routes/game.router.js';
 import groupRouter from './routes/group.router.js';
 import authRouter from './routes/auth.router.js';
 import sessionRouter from './routes/session.router.js';
+import friendRouter from './routes/friend.router.js';
 
 const server = express();
 const port = process.env.PORT || 3001;
@@ -16,6 +17,7 @@ server.use('/games', gameRouter);
 server.use('/groups', groupRouter);
 server.use(authRouter);
 server.use('/sessions', sessionRouter);
+server.use('/friends', friendRouter);
 
 server.listen(port, () => {
   console.log(`Server listening on port ${port}...`);
