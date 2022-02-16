@@ -2,7 +2,18 @@ import React from 'react';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { TextField, Paper, Button, Typography, Box } from '@mui/material/';
+import {
+  TextField,
+  Paper,
+  Button,
+  Typography,
+  Box,
+  IconButton,
+  Snackbar,
+  Link,
+} from '@mui/material/';
+import { Close as CloseIcon } from '@mui/icons-material/';
+import { useNavigate } from 'react-router-dom';
 
 function MyTextInput({ label, ...props }) {
   const [field, meta] = useField(props);
@@ -31,6 +42,9 @@ function MyTextInput({ label, ...props }) {
 }
 
 function Register() {
+  const navigate = useNavigate();
+  const [error, setError] = React.useState(null);
+
   const paperStyle = {
     padding: 30,
     height: 'auto',
@@ -40,6 +54,28 @@ function Register() {
     backgroundColor: 'rgba(52, 45, 43, 0.959)',
     color: 'white',
   };
+  const [open, setOpen] = React.useState(false);
+
+  const snackbar = () => {
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const action = (
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleClose}
+    >
+      <CloseIcon fontSize="small" />
+    </IconButton>
+  );
 
   return (
     <Formik
@@ -47,7 +83,7 @@ function Register() {
         email: '',
         password: '',
         confirmPassword: '',
-        username: '',
+        userName: '',
         zipCode: '',
       }}
       validationSchema={Yup.object({
@@ -58,9 +94,9 @@ function Register() {
           .required('Required')
           .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-            'Please enter a strong password',
+            'Please enter a strong password (1 lower case, 1 upper case, 1 special character, 1 number)',
           ),
-        username: Yup.string()
+        userName: Yup.string()
           .min(4, 'Must be at least 4 characters long')
           .max(20, 'Must be 20 characters or less')
           .required('Required'),
@@ -71,20 +107,22 @@ function Register() {
           .required('Zip code is required')
           .matches(/^[0-9]{5}/, 'Please enter valid zip code'),
       })}
-      onSubmit={async () => {
-        await axios
-          .post('TODO: connect to a database', {
-            username: '',
-            email: '',
-            password: '',
-            zipCode: '',
+      onSubmit={({ userName, email, password, zipCode }, actions) => {
+        axios
+          .post('http://localhost:3001/register', {
+            userName,
+            email,
+            password,
+            zipCode,
           })
-          .then((response) => {
-            console.log(response);
+          .then(() => {
+            navigate(`/login`);
           })
           .catch((err) => {
-            console.log(err);
+            if (err) setError(err.response.data.message);
+            snackbar();
           });
+        actions.resetForm();
       }}
     >
       <Paper elevation={10} style={paperStyle}>
@@ -96,7 +134,7 @@ function Register() {
         <Form>
           <MyTextInput
             label="Username"
-            name="username"
+            name="userName"
             id="Username"
             type="text"
             placeholder="HungryHippo"
@@ -133,13 +171,24 @@ function Register() {
             type="number"
             placeholder="00000"
           />
-          <br />
+          <Box style={{ textAlign: 'right', margin: '10px' }}>
+            <Link href="/login" color="#848482" underline="hover">
+              Already have an account? Log in here.
+            </Link>
+          </Box>
           <Box style={{ textAlign: 'center' }}>
             <Button type="submit" variant="contained">
               Register
             </Button>
           </Box>
         </Form>
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          message={error}
+          action={action}
+        />
       </Paper>
     </Formik>
   );
