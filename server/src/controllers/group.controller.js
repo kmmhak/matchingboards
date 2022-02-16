@@ -1,9 +1,10 @@
 import { handleResponse } from '../lib/utils.js';
-import * as Group from '../services/group.service';
+import * as Group from '../services/group.service.js';
 
-const createGroup = async (req, res) => {
+export const createGroup = async (req, res) => {
   const { name, description, isprivate } = req.body;
   const { id } = req.user;
+
   await handleResponse(req, res, Group.create, [
     name,
     description,
@@ -12,4 +13,4 @@ const createGroup = async (req, res) => {
   ]);
 };
 
-export default createGroup;
+export const temp = () => {};
