@@ -55,6 +55,18 @@ create table "games" (
   "image_url" VARCHAR
 );
 
+create table "groups" (
+  "id" SERIAL PRIMARY KEY,
+  "name" VARCHAR NOT NULL,
+  "description" VARCHAR,
+  "private" BOOLEAN NOT NULL,
+  "creator_id" INT NOT NULL,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT Now(),
+  CONSTRAINT "creator_id"
+  FOREIGN KEY("creator_id")
+  REFERENCES "users"("id")
+);
+
 create table "sessions" (
   "id" SERIAL PRIMARY KEY,
   "date" DATE NOT NULL,
