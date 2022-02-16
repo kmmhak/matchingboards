@@ -13,10 +13,14 @@ export const getAll = async () => {
 };
 
 export const add = async (senderId, receiverId) => {
-  const friend = {
-    senderId,
-    receiverId,
-  };
-  const newFriend = Friend.create({ ...friend });
-  return newFriend;
+  try {
+    const friend = {
+      senderId,
+      receiverId,
+    };
+    const newFriend = Friend.create({ ...friend });
+    return newFriend;
+  } catch (error) {
+    throw Error(`Error trying to add user ${error.message}`);
+  }
 };
