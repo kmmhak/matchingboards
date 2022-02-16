@@ -7,3 +7,9 @@ import * as Friend from '../services/friend.service.js';
 export const getAllFriends = async (req, res) => {
   await handleResponse(req, res, Friend.getAll, []);
 };
+
+export const addFriend = async (req, res) => {
+  const { senderId } = req.user;
+  const { receiverId } = req.body;
+  await handleResponse(req, res, Friend.add, [senderId, receiverId]);
+};
