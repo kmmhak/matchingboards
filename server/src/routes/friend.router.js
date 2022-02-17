@@ -10,5 +10,6 @@ const friendRouter = Router({ mergeParams: true });
 passport.use(jwtStrategy);
 
 friendRouter.get('/', controller.getAllFriends);
+friendRouter.post('/add', controller.addFriend);
 
 export default friendRouter;
