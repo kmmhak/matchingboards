@@ -9,9 +9,11 @@ import {
   CardContent,
 } from '@mui/material';
 import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
 
 function FriendGroups() {
   const [friends, setFriends] = useState([]);
+  const { currentUser } = useUser();
 
   const paperStyle = {
     padding: 30,
@@ -25,7 +27,7 @@ function FriendGroups() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/friends')
+      .get(`http://localhost:3001/friends/${currentUser.id}`)
       .then((result) => setFriends(result.data));
   }, []);
 
