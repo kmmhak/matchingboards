@@ -1,14 +1,24 @@
-// eslint-disable-next-line no-unused-vars
-import { isAdmin, result } from '../lib/utils.js';
+import { Op } from 'sequelize';
+import { result } from '../lib/utils.js';
 import Friend from '../models/friend.model.js';
 
-// eslint-disable-next-line import/prefer-default-export
-export const getAll = async () => {
+export const allFriends = async (id, user) => {
   try {
-    const friends = await Friend.findAll();
-    return friends;
+    if (id !== user.id) {
+      return result('Unauthorized', 401);
+    }
+    const friends = await Friend.findAll({
+      where: {
+        [Op.or]: [
+          { senderId: id },
+          { receiverId: id },
+        ],
+      },
+    });
+
+    return result(friends, 200);
   } catch (error) {
-    throw Error('Error getting all users');
+    throw Error('Error getting your friends');
   }
 };
 
