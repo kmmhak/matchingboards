@@ -15,6 +15,8 @@ function FriendGroups() {
   const [friends, setFriends] = useState([]);
   const { currentUser } = useUser();
 
+  const { id } = currentUser.id;
+
   const paperStyle = {
     padding: 30,
     height: 'auto',
@@ -27,8 +29,8 @@ function FriendGroups() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/friends/${currentUser.id}`)
-      .then((result) => setFriends(result.data));
+      .get(`http://localhost:3001/friends/${id}`)
+      .then((response) => setFriends(response.data));
   }, []);
 
   return (
