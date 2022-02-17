@@ -9,7 +9,7 @@ export const getAllFriends = async (req, res) => {
 };
 
 export const addFriend = async (req, res) => {
-  const { senderId } = req.user;
+  const { id } = req.user;
   const { receiverId } = req.body;
-  await handleResponse(req, res, Friend.add, [senderId, receiverId]);
+  await handleResponse(req, res, Friend.add, [id, receiverId]);
 };
