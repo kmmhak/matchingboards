@@ -1,13 +1,13 @@
 import React from 'react';
 import DeleteAccount from '../components/deleteAccount';
-import FindUser from '../components/FindUser';
+import UserSearchBar from '../components/UserSearchBar';
 import Logout from '../components/logout';
 
 function Home() {
   return (
     <div>
       <p>Home</p>
-      <FindUser />
+      <UserSearchBar />
       <Logout />
       <br />
       <br />

@@ -7,9 +7,9 @@ import SearchIcon from '@mui/icons-material/Search';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: 'rgba(228, 212, 179, 0.6)',
+  backgroundColor: 'rgba(228, 212, 179, 0.7)',
   '&:hover': {
-    backgroundColor: 'rgba(228, 212, 179, 0.824)',
+    backgroundColor: 'rgba(228, 212, 179, 0.8)',
   },
   marginLeft: 0,
   width: '100%',
@@ -37,7 +37,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+      width: '22ch',
       '&:focus': {
         width: '20ch',
       },
@@ -45,7 +45,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function FindUser() {
+export default function UserSearchBar() {
+  // const [userName, setUserName] = React.useState('Search by username');
+
   return (
     <Box
       component="form"
@@ -57,11 +59,14 @@ export default function FindUser() {
     >
       <Search>
         <SearchIconWrapper>
-          <SearchIcon sx={{ color: 'rgba(52, 45, 43, 0.959)' }} />
+          <SearchIcon color="secondary" />
         </SearchIconWrapper>
         <StyledInputBase
+          label="Username"
+          name="userName"
+          id="Username"
+          type="text"
           placeholder="Search by username"
-          inputProps={{ 'aria-label': 'search' }}
         />
       </Search>
     </Box>
