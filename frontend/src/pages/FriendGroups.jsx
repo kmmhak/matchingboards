@@ -43,7 +43,7 @@ function FriendGroups() {
           item
           md={8}
           xs={12}
-          sx={{ textAlign: 'center', justifyContent: 'center' }}
+          style={{ textAlign: 'center', justifyContent: 'center' }}
         >
           <br />
           <br />
