@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import { result } from '../lib/utils.js';
 import Friend from '../models/friend.model.js';
+import User from '../models/user.model.js';
 
 export const allFriends = async (id, user) => {
   try {
@@ -43,5 +44,37 @@ export const verify = async (senderId, receiverId, status) => {
     return result(friend, 200);
   } catch (error) {
     throw Error('Error trying to verify user');
+  }
+};
+
+export const checkFriendStatus = async (friendId, userId, id) => {
+  try {
+    if (userId !== id) {
+      return result('Unauthorized', 401);
+    }
+
+    if (userId === friendId) {
+      return result('You cannot send a friend request to yourself', 401);
+    }
+
+    const foundUser = await User.findByPk(friendId);
+
+    if (foundUser === null) {
+      return result('Not found', 404);
+    }
+
+    const friendStatus = await Friend.findOne({
+      where: {
+        senderId: {
+          [Op.or]: [friendId, userId],
+        },
+        receiverId: {
+          [Op.or]: [friendId, userId],
+        },
+      },
+    });
+    return result(friendStatus.status, 200);
+  } catch (error) {
+    throw Error('Error trying to check friend request status');
   }
 };
