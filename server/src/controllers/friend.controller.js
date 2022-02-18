@@ -14,19 +14,34 @@ export const addFriend = async (req, res) => {
   await handleResponse(req, res, Friend.add, [id, receiverId]);
 };
 
-export const validate = (method) => {
-  const validId = () => param('id', 'id must be an integer').isInt();
-
-  switch (method) {
-    case 'friendsOfAUser':
-      return [validId()];
-    default:
-      return [];
-  }
+export const checkFriend = async (req, res) => {
+  const { id } = req.user;
+  const { friendId, userId } = req.body;
+  await handleResponse(req, res, Friend.checkFriendStatus, [friendId, userId, id]);
 };
 
 export const verifyFriend = async (req, res) => {
   const { id } = req.user;
   const { senderId, status } = req.body;
   await handleResponse(req, res, Friend.verify, [senderId, id, status]);
+};
+
+export const validate = (method) => {
+  const validId = () => param('id', 'id must be an integer').isInt();
+
+  const validFriendId = () => body('friendId', 'friendId must be an integer').isInt();
+
+  const validUserId = () => body('userId', 'userId must be an integer').isInt();
+
+  switch (method) {
+    case 'friendsOfAUser':
+      return [validId()];
+    case 'checkFriend':
+      return [
+        validFriendId(),
+        validUserId(),
+      ];
+    default:
+      return [];
+  }
 };
