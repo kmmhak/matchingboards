@@ -34,3 +34,14 @@ export const add = async (id, receiverId) => {
     throw Error(`Error trying to add user ${error.message}`);
   }
 };
+
+export const verify = async (senderId, receiverId, status) => {
+  try {
+    const friend = await Friend.findOne({ where: { senderId, receiverId } });
+    friend.set({ status });
+    friend.save();
+    return result(friend, 200);
+  } catch (error) {
+    throw Error('Error trying to verify user');
+  }
+};

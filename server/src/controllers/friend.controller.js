@@ -24,3 +24,9 @@ export const validate = (method) => {
       return [];
   }
 };
+
+export const verifyFriend = async (req, res) => {
+  const { id } = req.user;
+  const { senderId, status } = req.body;
+  await handleResponse(req, res, Friend.verify, [senderId, id, status]);
+};
