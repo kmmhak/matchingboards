@@ -14,6 +14,7 @@ import SetLocation from '../pages/SetLocation';
 import Settings from '../pages/Settings';
 import { UserProvider } from '../contexts/UserContext';
 import ProtectedRoute from '../components/ProtectedRoute';
+import EditProfile from '../pages/EditProfile';
 
 export default function Router() {
   return (
@@ -48,6 +49,9 @@ export default function Router() {
         </Route>
         <Route path="/settings" element={<ProtectedRoute />}>
           <Route path="/settings" element={<Settings />} />
+        </Route>
+        <Route path="/edit-profile" element={<ProtectedRoute />}>
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Route>
 
         <Route path="/" element={<Home />} />
