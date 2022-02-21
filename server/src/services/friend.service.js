@@ -23,10 +23,10 @@ export const allFriends = async (id, user) => {
   }
 };
 
-export const add = async (id, receiverId) => {
+export const add = async (senderId, receiverId) => {
   try {
     const friend = {
-      id,
+      senderId,
       receiverId,
     };
     const newFriend = await Friend.create({ ...friend });

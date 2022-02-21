@@ -11,7 +11,17 @@ passport.use(jwtStrategy);
 
 friendRouter.post('/add', controller.addFriend);
 friendRouter.patch('/verify', controller.verifyFriend);
-friendRouter.get('/id/:id', passportJwt(), controller.validate('friendsOfAUser'), controller.friendsOfAUser);
-friendRouter.get('/checkFriendStatus', passportJwt(), controller.validate('checkFriend'), controller.checkFriend);
+friendRouter.get(
+  '/id/:id',
+  passportJwt(),
+  controller.validate('friendsOfAUser'),
+  controller.friendsOfAUser,
+);
+friendRouter.get(
+  '/checkFriendStatus',
+  passportJwt(),
+  controller.validate('checkFriend'),
+  controller.checkFriend,
+);
 
 export default friendRouter;

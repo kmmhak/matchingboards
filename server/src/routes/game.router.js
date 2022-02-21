@@ -9,9 +9,9 @@ import {
 const gameRouter = Router({ mergeParams: true });
 passport.use(jwtStrategy);
 
-gameRouter.get('/', passportJwt(), controller.getAllGames);
-gameRouter.get('/:id', passportJwt(), controller.getGameById);
-gameRouter.get('/search/name', passportJwt(), controller.searchGames);
+gameRouter.get('/', controller.getAllGames);
+gameRouter.get('/:id', controller.getGameById);
+gameRouter.get('/search/name', controller.searchGames);
 gameRouter.post('/users', passportJwt(), controller.addGameToUser);
 gameRouter.delete('/users', passportJwt(), controller.deleteGameFromUser);
 
