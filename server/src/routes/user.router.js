@@ -27,6 +27,11 @@ userRouter.put(
   controller.changePassword,
 );
 
-userRouter.put('/', passportJwt(), controller.validate('updateUser'), controller.updateUser);
+userRouter.put(
+  '/',
+  passportJwt(),
+  controller.validate('updateUser'),
+  controller.updateUser,
+);
 
 export default userRouter;

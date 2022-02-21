@@ -43,6 +43,10 @@ export const login = async (req, res) => {
   await handleResponse(req, res, User.login, [email, password]);
 };
 
+export const authenticate = async (req, res) => {
+  await handleResponse(req, res, User.authenticate, [req.user]);
+};
+
 export const changePassword = async (req, res) => {
   const { oldPassword, newPassword, confirmNewPassword } = req.body;
   const { id } = req.user;

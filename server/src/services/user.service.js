@@ -132,6 +132,8 @@ export const login = async (email, password) => {
   }
 };
 
+export const authenticate = async (user) => result({ user }, 200);
+
 export const changePassword = async (
   userId,
   oldPassword,
