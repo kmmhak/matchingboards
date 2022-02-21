@@ -9,7 +9,7 @@ import {
 const friendRouter = Router({ mergeParams: true });
 passport.use(jwtStrategy);
 
-friendRouter.post('/add', controller.addFriend);
+friendRouter.post('/add', passportJwt(), controller.addFriend);
 friendRouter.patch('/verify', controller.verifyFriend);
 friendRouter.get(
   '/id/:id',

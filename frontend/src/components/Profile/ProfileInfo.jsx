@@ -1,4 +1,10 @@
-import { Container, Divider, Grid, Typography as Text } from '@mui/material';
+import {
+  Container,
+  Divider,
+  Grid,
+  Snackbar,
+  Typography as Text,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { altStyle } from '../../styles';
@@ -8,11 +14,14 @@ import ProfilePicture from './ProfilePicture';
 import FriendRequestButton from './FriendRequestButton';
 import EditProfileButton from './EditProfileButton';
 import PublicInfo from './PublicInfo';
+import { useUser } from '../../contexts/UserContext';
 
 // TODO get users own games when its implemented
 function ProfileInfo({ user, isOwnProfile }) {
   const [games, setGames] = useState([]);
   const [message, setMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const { token } = useUser();
 
   useEffect(() => {
     axios
@@ -22,8 +31,32 @@ function ProfileInfo({ user, isOwnProfile }) {
           setGames(result.data);
         }
       })
-      .catch((err) => setMessage(err.response.data));
+      .catch((err) => {
+        setOpen(true);
+        setMessage(err.response.data);
+      });
   }, []);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleFriendRequest = () => {
+    axios
+      .post(
+        'http://localhost:3001/friends/add',
+        { receiverId: user.id },
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      )
+      .catch((err) => {
+        setOpen(true);
+        setMessage(err.response.data);
+      });
+  };
 
   return (
     <Container style={altStyle}>
@@ -42,7 +75,11 @@ function ProfileInfo({ user, isOwnProfile }) {
             isOwnProfile={isOwnProfile}
             numberOfGames={games.length}
           />
-          {isOwnProfile ? <EditProfileButton /> : <FriendRequestButton />}
+          {isOwnProfile ? (
+            <EditProfileButton />
+          ) : (
+            <FriendRequestButton handleRequest={handleFriendRequest} />
+          )}
         </Grid>
         <Grid
           item
@@ -58,9 +95,14 @@ function ProfileInfo({ user, isOwnProfile }) {
           <Divider sx={{ background: 'grey', marginTop: '0.3rem' }} />
           <br />
           <GameList games={games} />
-          {message}
         </Grid>
       </Grid>
+      <Snackbar
+        open={open}
+        autoHideDuration={2500}
+        onClose={handleClose}
+        message={message}
+      />
       <br />
     </Container>
   );
