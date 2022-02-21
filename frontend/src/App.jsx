@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, GlobalStyles } from '@mui/material';
-import Router from './constants/Routes';
+import Router from './routes/Routes';
 import theme from './assets/Themes';
 import bg from './assets/stone-bg2.jpg';
 

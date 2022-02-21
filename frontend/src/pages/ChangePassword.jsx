@@ -1,9 +1,8 @@
 import React from 'react';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import {
-  TextField,
   Paper,
   Button,
   Typography,
@@ -13,32 +12,8 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { useUser } from '../contexts/UserContext';
+import MyTextInput from '../components/MyTextInput';
 
-function MyTextInput({ label, ...props }) {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <TextField
-        variant="filled"
-        className="text-input"
-        label={props.id}
-        style={{
-          backgroundColor: 'rgba(228, 212, 179, 0.824)',
-          borderRadius: '5px',
-          marginTop: '30px',
-        }}
-        {...field}
-        {...props}
-        fullWidth
-        required
-      />
-      <br />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-}
 function ChangePassword() {
   const [openError, setOpenError] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
