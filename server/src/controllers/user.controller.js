@@ -62,7 +62,10 @@ export const validate = (method) => {
     body('email', 'email must be of valid form').isEmail();
 
   const validUsername = () =>
-    body('userName', 'username must be minimum 4 and maximum 20 characters long').isLength({
+    body(
+      'userName',
+      'username must be minimum 4 and maximum 20 characters long',
+    ).isLength({
       min: 4,
       max: 20,
     });

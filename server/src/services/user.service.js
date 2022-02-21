@@ -139,7 +139,7 @@ export const changePassword = async (
   confirmNewPassword,
 ) => {
   try {
-    const user = await getById(userId);
+    const user = await User.findByPk(userId);
 
     if (!user) return result('User not found', 404);
 

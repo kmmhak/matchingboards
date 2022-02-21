@@ -1,11 +1,11 @@
 import React from 'react';
+import ProfileInfo from '../components/Profile/ProfileInfo';
+import { useUser } from '../contexts/UserContext';
 
 function Profile() {
-  return (
-    <div>
-      <p>Profile</p>
-    </div>
-  );
+  const { currentUser } = useUser();
+
+  return <ProfileInfo user={currentUser} isOwnProfile />;
 }
 
 export default Profile;
