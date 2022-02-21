@@ -4,9 +4,11 @@ import {
   Paper,
   Typography,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
 } from '@mui/material';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
@@ -41,8 +43,8 @@ function FriendGroups() {
         </Typography>
         <Grid
           item
-          md={8}
-          xs={12}
+          md="auto"
+          xs="auto"
           style={{ textAlign: 'center', justifyContent: 'center' }}
         >
           <br />
@@ -54,22 +56,17 @@ function FriendGroups() {
             <Grid container spacing={2} style={{ justifyContent: 'center' }}>
               {friends.map((friend) => (
                 <Grid item key={friend.id} style={{ textAlign: 'center' }}>
-                  <Card
-                    style={{
-                      maxWidth: 200,
-                      backgroundColor: 'rgba(228, 212, 179, 0.824)',
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="190"
-                      image={friend.imageUrl}
-                      alt={friend.name}
-                    />
-                    <CardContent>
-                      <Typography variant="subtitle1">{friend.name}</Typography>
-                    </CardContent>
-                  </Card>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <List>
+                        <ListItem>
+                          <ListItemAvatar />
+                          <Avatar />
+                          <ListItemText primary={friend.name} />
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
                 </Grid>
               ))}
             </Grid>
