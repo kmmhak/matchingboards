@@ -47,3 +47,9 @@ export const validate = (method) => {
       return [];
   }
 };
+
+export const removeFriend = async (req, res) => {
+  const { id } = req.user;
+  const { receiverId } = req.params;
+  await handleResponse(req, res, Friend.remove, [id, receiverId]);
+};
