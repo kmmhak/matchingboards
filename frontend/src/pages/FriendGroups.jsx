@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemAvatar,
   Avatar,
-  ListItemText,
 } from '@mui/material';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
@@ -61,8 +60,12 @@ function FriendGroups() {
                       <List>
                         <ListItem>
                           <ListItemAvatar />
-                          <Avatar src={friend.imageUrl} variant="rounded" />
-                          <ListItemText primary={friend.name} />
+                          <Avatar
+                            src={friend.imageUrl}
+                            variant="rounded"
+                            style={{ margin: 10 }}
+                          />
+                          <Typography variant="h5">{friend.name}</Typography>
                         </ListItem>
                       </List>
                     </Grid>

@@ -29,9 +29,9 @@ export default function Router() {
         <Route path="/currentsession" element={<ProtectedRoute />}>
           <Route path="/currentsession" element={<CurrentSession />} />
         </Route>
-        {/* <Route path="/friendgroups" element={<ProtectedRoute />}> */}
-        <Route path="/friendgroups" element={<FriendGroups />} />
-        {/* </Route> */}
+        <Route path="/friendgroups" element={<ProtectedRoute />}>
+          <Route path="/friendgroups" element={<FriendGroups />} />
+        </Route>
         <Route path="/joinsession" element={<ProtectedRoute />}>
           <Route path="/joinsession" element={<JoinSession />} />
         </Route>
