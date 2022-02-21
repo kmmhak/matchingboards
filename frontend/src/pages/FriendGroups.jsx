@@ -61,7 +61,7 @@ function FriendGroups() {
                       <List>
                         <ListItem>
                           <ListItemAvatar />
-                          <Avatar />
+                          <Avatar src={friend.imageUrl} variant="rounded" />
                           <ListItemText primary={friend.name} />
                         </ListItem>
                       </List>
