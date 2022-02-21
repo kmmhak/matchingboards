@@ -78,3 +78,12 @@ export const checkFriendStatus = async (friendId, userId, id) => {
     throw Error('Error trying to check friend request status');
   }
 };
+
+export const remove = async (senderId, receiverId) => {
+  try {
+    const friend = await Friend.destroy({ where: { senderId, receiverId } });
+    return result(friend, 200);
+  } catch (error) {
+    throw Error('Error trying to remove user from friends');
+  }
+};
