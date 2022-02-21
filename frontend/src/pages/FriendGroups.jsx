@@ -14,6 +14,7 @@ import { useUser } from '../contexts/UserContext';
 
 function FriendGroups() {
   const [friends, setFriends] = useState([]);
+  const [groups, setGroups] = useState([]);
   const { currentUser } = useUser();
 
   const { id } = currentUser.id;
@@ -34,10 +35,16 @@ function FriendGroups() {
       .then((response) => setFriends(response.data));
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/groups/${id}`)
+      .then((response) => setGroups(response.data));
+  }, []);
+
   return (
     <Box>
       <Paper style={paperStyle}>
-        <Typography variant="h4" style={{ textAlign: 'center' }}>
+        <Typography variant="h3" style={{ textAlign: 'center' }}>
           Friends and friend groups
         </Typography>
         <Grid
@@ -79,6 +86,29 @@ function FriendGroups() {
             Friend Groups
           </Typography>
           <br />
+          <Box style={{ margin: '15px' }}>
+            <Grid container spacing={2} style={{ justifyContent: 'center' }}>
+              {groups.map((group) => (
+                <Grid item key={group.id} style={{ textAlign: 'center' }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <List>
+                        <ListItem>
+                          <ListItemAvatar />
+                          <Avatar
+                            src={group.imageUrl}
+                            variant="rounded"
+                            style={{ margin: 10 }}
+                          />
+                          <Typography variant="h5">{group.name}</Typography>
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </Grid>
       </Paper>
     </Box>
