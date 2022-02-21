@@ -23,5 +23,8 @@ friendRouter.get(
   controller.validate('checkFriend'),
   controller.checkFriend,
 );
+friendRouter.get('/id/:id', passportJwt(), controller.validate('friendsOfAUser'), controller.friendsOfAUser);
+friendRouter.get('/checkFriendStatus', passportJwt(), controller.validate('checkFriend'), controller.checkFriend);
+friendRouter.delete('/remove/:id', passportJwt(), controller.validate('removeFriend'), controller.removeFriend);
 
 export default friendRouter;
