@@ -1,3 +1,5 @@
+import { Op } from 'sequelize';
+import User from '../models/user.model.js';
 import {
   genJwt,
   genSaltHash,
@@ -5,7 +7,6 @@ import {
   validPassword,
   isAdmin,
 } from '../lib/utils.js';
-import User from '../models/user.model.js';
 
 export const getAll = async () => {
   try {
@@ -38,6 +39,15 @@ export const add = async (user) => {
     return result(newUser, 200);
   } catch (error) {
     throw Error(`Error adding user: ${error.message}`);
+  }
+};
+
+export const search = async (username) => {
+  try {
+    const user = await User.findAll({ where: { [Op.like]: username } });
+    return result(user, 200);
+  } catch (error) {
+    throw Error('Error trying to search for a user');
   }
 };
 
