@@ -16,6 +16,11 @@ export const addUser = async (req, res) => {
   await handleResponse(req, res, User.add, [user]);
 };
 
+export const searchUser = async (req, res) => {
+  const { username } = req.params;
+  await handleResponse(req, res, User.search, [username]);
+};
+
 export const deleteUser = async (req, res) => {
   const id = Number(req.params.id);
   const { user } = req;
