@@ -44,7 +44,7 @@ export const add = async (user) => {
 
 export const search = async (username) => {
   try {
-    const user = await User.findAll({ where: { [Op.like]: username } });
+    const user = await User.findAll({ where: { [Op.like]: { username } } });
     return result(user, 200);
   } catch (error) {
     throw Error('Error trying to search for a user');
