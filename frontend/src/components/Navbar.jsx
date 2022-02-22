@@ -1,10 +1,16 @@
 import { AppBar, Badge, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import { useState } from "react";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
+import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CasinoIcon from '@mui/icons-material/Casino';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from "react-router-dom";
+import Logout from "./Logout";
+import DeleteAccount from "./DeleteAccount";
 
 export default function NavBar() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -13,7 +19,9 @@ export default function NavBar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const handleProfileMenuOpen = (event) => {
+    const navigate = useNavigate();
+
+    const handleSettingsMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -47,8 +55,16 @@ export default function NavBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose} style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
+                <Typography variant="white">
+                    Change password</Typography>
+            </MenuItem>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
+                <DeleteAccount />
+            </MenuItem>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
+                <Logout />
+            </MenuItem>
         </Menu>
     );
 
@@ -71,14 +87,29 @@ export default function NavBar() {
         >
             <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}
             >
-                <IconButton size="large" aria-label="show 4 new mails" color="input">
-                    <Badge badgeContent={3} color="error">
-                        <MailIcon />
+                <IconButton size="large" aria-label="show 4 new mails" color="input" onClick={() => {
+                                navigate('/mygames')
+                            }}>
+                        <CasinoIcon />
+                </IconButton>
+                <Typography variant="white" onClick={() => {
+                                navigate('/mygames')
+                            }}>
+                    Your games
+                </Typography>
+            </MenuItem>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}
+            >
+                <IconButton size="large" aria-label="show 4 new messages" color="input">
+                    <Badge badgeContent={4} color="error">
+                        <ChatIcon />
                     </Badge>
                 </IconButton>
-                <p>Messages</p>
+                <Typography variant="white">
+                    Messages
+                </Typography>
             </MenuItem>
-            <MenuItem>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
                 <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
@@ -88,19 +119,57 @@ export default function NavBar() {
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
-                <p>Notifications</p>
+                <Typography variant="white">
+                    Notifications
+                </Typography>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
                     color="input"
+                    onClick={() => {
+                        navigate('/profile')
+                    }}
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <Typography variant="white" onClick={() => {
+                        navigate('/profile')
+                    }}>
+                    Profile
+                </Typography>
+            </MenuItem>
+            <MenuItem style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
+                <IconButton
+                    size="large"
+                    aria-label="friends of current user"
+                    color="input"
+                    onClick={() => {
+                        navigate('/friendgroups')
+                    }}
+                >
+                    <PeopleAltIcon />
+                </IconButton>
+                <Typography variant="white" onClick={() => {
+                                navigate('/friendgroups')
+                            }}>
+                    Friends and groups
+                </Typography>
+            </MenuItem>
+            <MenuItem onClick={handleSettingsMenuOpen} style={{ backgroundColor: 'rgba(52, 45, 43, 0.959)' }}>
+                <IconButton
+                    size="large"
+                    aria-label="settings"
+                    aria-controls="primary-settings-menu"
+                    aria-haspopup="true"
+                    color="input"
+                >
+                    <SettingsIcon />
+                </IconButton>
+                <Typography variant="white">
+                    Settings
+                </Typography>
             </MenuItem>
         </Menu>
     );
@@ -109,28 +178,41 @@ export default function NavBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" color="secondary">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="input"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        onClick={() => {
+                            navigate('/')
+                        }}
                     >
-                        MUI
+                        LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1 }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="show 4 new mails" color="input">
+                    <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    <IconButton
+                            size="large"
+                            aria-label="home"
+                            color="input"
+                            onClick={() => {
+                                navigate('/')
+                            }}
+                        >
+                            <HomeIcon />
+                        </IconButton>
+                    <IconButton
+                            size="large"
+                            aria-label="games of current user"
+                            color="input"
+                            onClick={() => {
+                                navigate('/mygames')
+                            }}
+                        >
+                            <CasinoIcon />
+                        </IconButton>
+                        <IconButton size="large" aria-label="show 4 new messages" color="input">
                             <Badge badgeContent={4} color="error">
-                                <MailIcon />
+                                <ChatIcon />
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -144,17 +226,37 @@ export default function NavBar() {
                         </IconButton>
                         <IconButton
                             size="large"
-                            edge="end"
                             aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
                             color="input"
+                            onClick={() => {
+                                navigate('/profile')
+                            }}
                         >
                             <AccountCircle />
                         </IconButton>
+                        <IconButton
+                            size="large"
+                            aria-label="friends of current user"
+                            color="input"
+                            onClick={() => {
+                                navigate('/friendgroups')
+                            }}
+                        >
+                            <PeopleAltIcon />
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            edge="end"
+                            aria-label="settings"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleSettingsMenuOpen}
+                            color="input"
+                        >
+                            <SettingsIcon />
+                        </IconButton>
                     </Box>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{ display: { xs: 'flex', sm: 'none' } }} >
                         <IconButton
                             size="large"
                             aria-label="show more"

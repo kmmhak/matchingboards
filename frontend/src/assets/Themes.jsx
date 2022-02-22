@@ -16,6 +16,15 @@ const theme = createTheme({
     }
   },
   typography: {
+    light: {
+      color: '#e4d4b3',
+    },
+    dark: {
+      color: '#342d2b',
+    },
+    white: {
+      color: '#ffff',
+    },
     fontFamily: 'Lora',
   },
 });

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
 
@@ -11,9 +11,9 @@ function Logout() {
   };
 
   return (
-    <Button type="submit" onClick={handleLogout} variant="contained">
-      Placeholder Logout-button
-    </Button>
+    <Typography variant="white" onClick={handleLogout} >
+      Logout
+    </Typography>
   );
 }
 

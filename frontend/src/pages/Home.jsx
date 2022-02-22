@@ -1,6 +1,4 @@
 import React from 'react';
-import DeleteAccount from '../components/DeleteAccount';
-import Logout from '../components/Logout';
 import NavBar from '../components/Navbar';
 
 function Home() {
@@ -8,10 +6,6 @@ function Home() {
     <div>
       <NavBar />
       <p>Home</p>
-      <Logout />
-      <br />
-      <br />
-      <DeleteAccount />
     </div>
   );
 }

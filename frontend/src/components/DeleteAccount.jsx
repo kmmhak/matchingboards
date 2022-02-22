@@ -7,6 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
   Snackbar,
+  Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -49,9 +50,9 @@ function DeleteAccount() {
 
   return (
     <>
-      <Button onClick={handleClickDeleteButton} variant="contained">
-        Placeholder delete account button
-      </Button>
+      <Typography onClick={handleClickDeleteButton} variant="white">
+        Delete account
+      </Typography>
       <Dialog
         open={openAlert}
         onClose={handleCancelDelete}
