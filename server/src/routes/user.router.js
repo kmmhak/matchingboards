@@ -12,7 +12,7 @@ passport.use(jwtStrategy);
 userRouter.post('/', controller.validate('addUser'), controller.addUser);
 userRouter.get('/:id', controller.validate('getUser'), controller.getUser);
 userRouter.get('/', controller.getAllUsers);
-userRouter.get('/:username', controller.searchUser);
+userRouter.get('/search/:username', controller.validate('searchUser'), controller.searchUser);
 
 userRouter.delete(
   '/:id',
