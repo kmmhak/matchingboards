@@ -60,6 +60,25 @@ function Login() {
     color: 'white',
   };
 
+  const handleSubmit = ({ email, password }, actions) => {
+    setError(null);
+    axios
+      .post('http://localhost:3001/login', {
+        email,
+        password,
+      })
+      .then((response) => {
+        const { token, user } = response.data;
+        login(user, token);
+        navigate('/');
+      })
+      .catch((err) => {
+        if (err && err.response) setError(err.response.data.message);
+        setOpen(true);
+        actions.resetForm();
+      });
+  };
+
   return (
     <Formik
       initialValues={{
@@ -70,24 +89,7 @@ function Login() {
         email: Yup.string().required('Required'),
         password: Yup.string().required('Required'),
       })}
-      onSubmit={({ email, password }, actions) => {
-        setError(null);
-        axios
-          .post('http://localhost:3001/login', {
-            email,
-            password,
-          })
-          .then((response) => {
-            const { token, user } = response.data;
-            login(user, token);
-            navigate('/');
-          })
-          .catch((err) => {
-            if (err && err.response) setError(err.response.data.message);
-            setOpen(true);
-            actions.resetForm();
-          });
-      }}
+      onSubmit={handleSubmit}
     >
       <Paper elevation={10} style={paperStyle}>
         <Box style={{ paddingBottom: '15px' }}>
