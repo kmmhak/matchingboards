@@ -77,6 +77,24 @@ function Register() {
     </IconButton>
   );
 
+  const handleSubmit = ({ userName, email, password, zipCode }, actions) => {
+    axios
+      .post('http://localhost:3001/register', {
+        userName,
+        email,
+        password,
+        zipCode,
+      })
+      .then(() => {
+        navigate(`/login`);
+      })
+      .catch((err) => {
+        if (err) setError(err.response.data.message);
+        snackbar();
+      });
+    actions.resetForm();
+  };
+
   return (
     <Formik
       initialValues={{
@@ -107,23 +125,7 @@ function Register() {
           .required('Zip code is required')
           .matches(/^[0-9]{5}/, 'Please enter valid zip code'),
       })}
-      onSubmit={({ userName, email, password, zipCode }, actions) => {
-        axios
-          .post('http://localhost:3001/register', {
-            userName,
-            email,
-            password,
-            zipCode,
-          })
-          .then(() => {
-            navigate(`/login`);
-          })
-          .catch((err) => {
-            if (err) setError(err.response.data.message);
-            snackbar();
-          });
-        actions.resetForm();
-      }}
+      onSubmit={handleSubmit}
     >
       <Paper elevation={10} style={paperStyle}>
         <Box style={{ paddingBottom: '15px' }}>
